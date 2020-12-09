@@ -1,0 +1,240 @@
+/*
+    5个圆的滚动动画效果思路
+    1、先把实现动画的静态页面布局好
+        圆和阴影分别布局
+        哪些元素动，怎么动？
+        5个圆，只有最后一个需要做位移和旋转，其他圆和阴影只做位移。
+    2、怎么使5个圆保持一致进行运动
+        1）5个圆从同一位置（计算一下位置）
+        2）5个圆同时出发进行运动
+        3）速度必须一致（计算一下速度），才能保证效果
+        4）如何计算位置和速度：
+            每个圆的开始运动的位置要放在同一个位置。
+            每个圆相距150，重叠一部分（实际上每个圆直径是173）
+            173px 两个圆形重叠的部分 23px
+            173 - 23 = 150px
+    3、计算每个圆的静态定位位置为：
+        第一个圆：left 0 top 0
+        第二个圆：left 150 top 0
+        第三个圆：left 300 top 0
+        第四个圆：left 450 top 0
+        第五个圆：left 600 top 0
+    4、我们所看到的5个圆滚动，实际上只是最后一个圆在做滚动效果
+    5、动画开始的位置需要定位：绝对定位，其父元素先相对定位
+        假如第一个圆开始运动的位置left为：-300px(-n)
+        假如第二个圆开始运动的位置left为：-450px(-n-150)
+        假如第三个圆开始运动的位置left为：-600px(-n-300)
+        假如第四个圆开始运动的位置left为：-750px(-n-450)
+        假如第五个圆开始运动的位置left为：-900px(-n-600)
+        每次相差150px
+    6、由此来计算速度：
+        假设第一个圆由-300px运动到0px，动画时间为1s；
+        则其它圆的动画时间由此计算：其它圆left值/300
+*/
+
+/*第一个圆的动画*/
+@keyframes first_circle {
+    0% {
+        transform: translate(-580px,0px);
+    }
+    100% {
+        transform: translate(0px,0px);
+    }
+}
+
+#title>div>ul>li:first-child>p {
+    animation: first_circle 2s linear;
+}
+
+/*第一个阴影的动画*/
+@keyframes first_shadow {
+    0% {
+        transform: translate(-580px,0px);
+    }
+    100% {
+        transform: translate(0px,0px);
+    }
+}
+
+#title>div>ul>li:first-child>b {
+    animation: first_shadow 2s linear;
+}
+
+/*第二个圆形的动画*/
+@keyframes yellow_circle {
+    0% {
+        transform: translate(-730px,0px);
+    }
+    100% {
+        transform: translate(0px,0px);
+    }
+}
+
+.yellow_circle>p {
+    animation: yellow_circle 2.517s linear;
+}
+
+/*第二个阴影的动画*/
+@keyframes yellow_shadow {
+    0% {
+        transform: translate(-730px,0px);
+    }
+    100% {
+        transform: translate(0px,0px);
+    }
+}
+
+.yellow_circle>b {
+    animation: yellow_shadow 2.517s linear;
+}
+
+/*第三个圆形的动画*/
+@keyframes blue_circle {
+    0% {
+        transform: translate(-880px,0px);
+    }
+    100% {
+        transform: translate(0px,0px);
+    }
+}
+
+.blue_circle>p {
+    animation:  blue_circle 3.034s linear;
+}
+
+/*第三个阴影的动画*/
+@keyframes blue_shadow {
+    0% {
+        transform: translate(-880px,0px);
+    }
+    100% {
+        transform: translate(0px,0px);
+    }
+}
+
+.blue_circle>b {
+    animation:  blue_shadow 3.034s linear;
+}
+
+/*第四个圆形的动画*/
+@keyframes red_circle {
+    0% {
+        transform: translate(-1030px,0px);
+    }
+    100% {
+        transform: translate(0px,0px);
+    }
+}
+
+.red_circle>p {
+    animation: red_circle 3.552s linear;
+}
+
+/*第四个阴影的动画*/
+@keyframes red_shadow {
+    0% {
+        transform: translate(-1030px,0px);
+    }
+    100% {
+        transform: translate(0px,0px);
+    }
+}
+
+.red_circle>b {
+    animation: red_shadow 3.552s linear;
+}
+
+/*最后一个圆形的动画*/
+@keyframes last_circle {
+    0% {
+        transform: translate(-1180px,0px) rotate(0deg);
+    }
+    100% {
+        transform: translate(0px,0px) rotate(360deg);
+    }
+}
+
+#title>div>ul>li:last-child>p {
+    animation: last_circle 4.069s linear;
+}
+
+/*最后一个阴影的动画*/
+@keyframes last_shadow {
+    0% {
+        transform: translate(-1180px,0px);
+    }
+    100% {
+        transform: translate(0px,0px);
+    }
+}
+
+#title>div>ul>li:last-child>b {
+    animation: last_shadow 4.069s linear;
+}
+
+/*
+    prompt悬浮旋转
+*/
+#prompt>div>a:hover {
+    animation: promptHover 1s linear infinite;
+}
+
+@keyframes promptHover {
+    /*from {
+        transform: rotate(0);
+    }
+    to {
+        transform: rotate(360deg);
+    }*/
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/*
+    闪烁：透明度动画 opacity由0~1之间
+    旋转：transform: rotate(deg)
+*/
+
+@keyframes ScintillationRotation {
+    0% {
+        transform: rotate(0deg);
+        opacity: 1;
+    }
+    15% {
+        transform: rotate(10deg);
+        opacity: 0.2;
+    }
+    30% {
+        transform: rotate(20deg);
+        opacity: 1;
+    }
+    45% {
+        transform: rotate(30deg);
+        opacity: 0.2;
+    }
+    60% {
+        transform: rotate(20deg);
+        opacity: 1;
+    }
+    75% {
+        transform: rotate(10deg);
+        opacity: 0.2;
+    }
+    85% {
+        transform: rotate(0deg);
+        opacity: 1;
+    }
+    95% {
+        transform: rotate(-10deg);
+        opacity: 0.2;
+    }
+    100% {
+        transform: rotate(-20deg);
+        opacity: 1;
+    }
+}
+
+#foot_nav>ul>li>a:hover {
+    animation: ScintillationRotation 0.5s linear;
+}
